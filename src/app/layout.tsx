@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, AR_One_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./theme-provider";
+import HeaderComponent from "@/components/header";
+import FooterComponent from "@/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,7 +13,7 @@ const geistSans = Geist({
 const AROneSans = AR_One_Sans({
   variable: "--font-one-sans",
   subsets: ["latin"],
-   display: 'swap'
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -34,14 +36,18 @@ export default function RootLayout({
       <body
         className={`${AROneSans.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <main className="flex flex-col justify-between">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <HeaderComponent></HeaderComponent>
+          <main>{children}</main>
+          <FooterComponent></FooterComponent>
         </ThemeProvider>
+        </main>
       </body>
     </html>
   );
