@@ -27,7 +27,7 @@ export default function Home() {
         </div>
       </div>
       <div className="bg-destructive bg-blend-color-burn h-10 w-svw bg-[url(background.jpg)] bg-top min-w-fit "></div>
-      <div className="flex flex-col items-center bg-card h-vh w-dvw p-10">
+      <div className="flex flex-col items-center bg-card w-dvw p-10">
         <h1 className="text-6xl mb-10">New Arrival</h1>
         <div className="">{RenderVinylList(8)}</div>
       </div>
