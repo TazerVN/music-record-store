@@ -37,7 +37,6 @@ const useMusicBrainData: () => fetchResult = () => {
           "/api/discogs?query=genre=metal&type=release&per_page=30&page=2",
           {
             signal: AbortSignal.timeout(10000),
-            next: { revalidate: 3600 },
           }
         );
         const json = await result.json();

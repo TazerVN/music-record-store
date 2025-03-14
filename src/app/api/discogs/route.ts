@@ -30,7 +30,6 @@ export async function GET(request: NextRequest) {
           Authorization:
             "Discogs token=AOadKQXLEFxnQwtkCfphJPKirdoIuYXsQtsYLKaL",
         },
-        next: { revalidate: 3600 },
       });
 
       console.log("Response status:", response.status);
