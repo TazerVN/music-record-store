@@ -32,8 +32,12 @@ const useMusicBrainData: () => fetchResult = () => {
   useEffect(() => {
     const fetching = cache(async () => {
       try {
+        console.log("Starting fetch...");
         const result = await fetch(
-          "/api/discogs?query=genre=metal&type=release&per_page=30&page=2"
+          "/api/discogs?query=genre=metal&type=release&per_page=30&page=2",
+          {
+            signal: AbortSignal.timeout(10000),
+          }
         );
         const json = await result.json();
         const songArray: Array<Song> = [];
@@ -54,7 +58,7 @@ const useMusicBrainData: () => fetchResult = () => {
         });
         setFetchResult((f) => ({ ...f, dataArray: songArray, loading: false }));
       } catch (err) {
-        console.log(err);
+        console.log("Fetch error:");
         setFetchResult((f) => ({
           ...f,
           loading: false,
