@@ -92,7 +92,7 @@ function VinylDetail({
               ></Modal>
               {isHover ? (
                 <div className="relative p-2 bg-transmission transition-all flex flex-col justify-center items-center w-45">
-                  <h4 className="text-sms overflow-scroll overflow-x-hidden scroll-x m-auto h-15 select-none text-sm">
+                  <h4 className="text-sms font-bold overflow-scroll overflow-x-hidden scroll-x m-auto h-15 select-none text-sm">
                     {name}
                   </h4>
                   <h4 className="text-sms m-auto h-fit select-none">
@@ -106,7 +106,7 @@ function VinylDetail({
                       }}
                       variant="destructive"
                       size="icon"
-                      className="h-fit w-30 p-2 hover:border-b-2 border-destructive-foreground hover:text-accent-foreground transition-all"
+                      className="h-fit w-30 p-2 font-bold hover:border-b-2 border-destructive-foreground hover:text-accent-foreground transition-all"
                     >
                       Add to Cart
                     </Button>

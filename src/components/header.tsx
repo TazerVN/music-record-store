@@ -5,11 +5,11 @@ import { Button } from "./ui/button";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import background from "@/app/background.jpg";
 import useToggle from "./toggleCart";
 import { Cart } from "@/components/shoppingcart";
 import { useCartContext } from "./cartData";
 import { useScreenSize } from "./useScreenSize";
+import background from "@/app/background.jpg"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,10 +26,7 @@ function HeaderComponent() {
   const screenSize = useScreenSize();
 
   const itemCartLength = () => {
-    if (
-      itemCart === null ||
-      itemCart === undefined
-    ) {
+    if (itemCart === null || itemCart === undefined) {
       throw new Error("Cart context is null");
     } else {
       let result: number = 0;
@@ -133,22 +130,26 @@ function HeaderComponent() {
         isToggle={isToggle}
         setToggleOff={setToggleOff}
         itemCart={itemCart}
-        setItemInCart={setItemCart}
+        setItemInCart={setItemCart ? setItemCart : undefined}
       ></Cart>
       {screenSize == "xs" ? (
-        <div className="-z-10 absolute bg-background">
+        <div className="-z-10 absolute bg-background transition-all">
           <Image
             src={background}
             alt="gut"
-            className="fixed opacity-30 scale-200 bg-cover h-fit"
+            className="fixed opacity-30 scale-200 bg-cover h-fit object-fill"
+            placeholder="blur"
+            priority
           ></Image>
         </div>
       ) : (
-        <div className="-z-10 absolute top-0 left-0 bg-background min-h-fit bg-cover bg-center  ">
+        <div className="-z-10 fixed top-0 left-0 bg-background bg-center transition-all overflow-hidden">
           <Image
             src={background}
             alt="gut"
-            className="bg-cover bg-center bg-no-repeat min-h-fit min-w-screen fixed opacity-30"
+            placeholder="blur"
+            className="bg-cover bg-center bg-no-repeat opacity-30 object-fill w-screen transition-none"
+            priority
           ></Image>
         </div>
       )}

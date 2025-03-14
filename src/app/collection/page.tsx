@@ -21,7 +21,7 @@ export default function Collection() {
           }
         ></div>
         <div className="absolute h-60 flex flex-col justify-center items-center">
-          <h1 className="underline italic text-destructive text-5xl w-dvw text-center self-center flex justify-center items-center">
+          <h1 className="font-extrabold border-destructive-foreground underline italic text-destructive text-5xl w-dvw text-center self-center flex justify-center items-center">
             Vinyl
           </h1>
           <h1 className=" text-foreground text-5xl w-dvw text-center self-center flex justify-center items-center">

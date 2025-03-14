@@ -68,11 +68,11 @@ export function Cart({
       }
     >
       {isToggle ? (
-        <div className="relative  w-dvw z-50 flex justify-end">
+        <div className="relative w-dvw z-50 flex justify-end">
           <div
             className={
               "flex flex-col justify-between bg-background transition-all rounded-xl shadow-[0px_2px_4px] shadow-black " +
-              (screenSize === "xs" ? "p-2 h-lvh" : "p-5 h-lvh w-100 ")
+              (screenSize === "xs" ? "p-2 h-lvh" : "p-5 h-lvh w-120 ")
             }
             autoFocus
           >
@@ -101,7 +101,7 @@ export function Cart({
                 (screenSize === "xs" ? "h-100" : "h-dvh")
               }
             >
-              <ul className="flex flex-col gap-2 self-start md:w-80 lg:w-xl items-start justify-self-start">
+              <ul className="flex flex-col gap-2 self-start md:w-90 lg:w-xl items-start justify-self-start">
                 {itemCart?.map((item, index) =>
                   item ? (
                     <li
@@ -118,14 +118,14 @@ export function Cart({
                       </div>
                       <div className="flex flex-col justify-between flex-1/3">
                         <div className="flex flex-col">
-                          <h1 className="font-extrabold text-lg">
+                          <h1 className="font-bold text-lg">
                             {item.name}
                           </h1>
-                          <p className="font-light text-sm">
+                          <p className="font-medium text-sm">
                             {item.price + "$"}
                           </p>
                         </div>
-                        <p className="font-light text-sm">
+                        <p className="font-medium text-sm">
                           {"Amount: " + item.amount}
                         </p>
                       </div>
@@ -156,7 +156,7 @@ export function Cart({
                 size="lg"
                 variant="ghost"
                 className={
-                  "bg-destructive hover:border-b-2 border-destructive-foreground text-lg h-15 self-center " +
+                  "bg-destructive font-bold hover:border-b-2 border-destructive-foreground text-lg h-15 self-center " +
                   (screenSize === "xs" ? "w-50" : "w-70")
                 }
                 onClick={() => {

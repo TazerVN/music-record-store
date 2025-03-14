@@ -23,7 +23,7 @@ export default function About() {
             (screenSize === "xs" ? "h-50" : "h-60")
           }
         >
-          <h1 className="underline italic text-destructive text-5xl w-dvw text-center self-center flex justify-center items-center">
+          <h1 className="font-extrabold underline italic text-destructive text-5xl w-dvw text-center self-center flex justify-center items-center">
             About
           </h1>
           <h1 className=" text-foreground text-5xl w-dvw text-center self-center flex justify-center items-center">
@@ -34,7 +34,7 @@ export default function About() {
       <div className="bg-destructive bg-blend-color-burn h-10 w-svw bg-[url(background.jpg)] bg-top min-w-fit col-start-2"></div>
       <div className=" flex flex-col bg-transmission p-10 w-dvw ">
         <div className="flex flex-col justify-between bg-destructive bg-[url(background.jpg)] bg-top bg-blend-multiply rounded-2xl p-5 ">
-          <h1 className="text-4xl font-extrabold self-center m-10 text-destructive-foreground">
+          <h1 className="text-4xl font-bold self-center m-10 text-destructive-foreground">
             About us
           </h1>
           <div className="flex flex-col items-center">

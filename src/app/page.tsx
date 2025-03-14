@@ -30,7 +30,7 @@ export default function Home() {
           <Button
             onClick={() => router.push("/collection")}
             variant="destructive"
-            className="mt-5 hover:border-b-2 border-destructive-foreground transition-all"
+            className="mt-5 font-bold hover:border-b-2 border-destructive-foreground transition-all"
           >
             Shop Now
           </Button>
@@ -38,7 +38,7 @@ export default function Home() {
       </div>
       <div className="bg-destructive bg-blend-color-burn h-10 w-svw bg-[url(background.jpg)] bg-top min-w-fit "></div>
       <div className="flex flex-col items-center bg-card w-dvw p-10">
-        <h1 className="text-6xl mb-10 text-center">New Arrival</h1>
+        <h1 className="text-6xl mb-10 text-center font-bold">New Arrival</h1>
         <div className="">
           {itemCart !== undefined && setItemCart !== undefined ? (
             RenderVinylList(12, { itemCart, setItemCart })

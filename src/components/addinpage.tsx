@@ -47,7 +47,7 @@ export default function Modal({ ...props }) {
                   >
                     {props.name}
                   </DialogTitle>
-                  <div className={"flex flex-col mt-2 gap-2 w-50 " + (screenSize === "xs" ? " items-center justify-center" : " ")}>
+                  <div className={"flex flex-col mt-2 gap-2 w-60 " + (screenSize === "xs" ? " items-center justify-center" : " ")}>
                     <p className="text-sm text-foreground">${props.price}</p>
                     <h2 className="text-md text-foreground">Quantity:</h2>
                     <Input

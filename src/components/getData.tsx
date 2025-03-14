@@ -34,10 +34,7 @@ const useMusicBrainData: () => fetchResult = () => {
       try {
         console.log("Starting fetch...");
         const result = await fetch(
-          "/api/discogs?query=genre=metal&type=release&per_page=30&page=2",
-          {
-            signal: AbortSignal.timeout(10000),
-          }
+          "/api/discogs?query=genre=metal&type=release&per_page=30&page=2"
         );
         const json = await result.json();
         const songArray: Array<Song> = [];
