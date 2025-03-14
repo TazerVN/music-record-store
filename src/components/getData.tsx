@@ -57,9 +57,10 @@ const useMusicBrainData: () => fetchResult = () => {
         console.log(err);
         setFetchResult((f) => ({
           ...f,
+          loading: false,
           error: err,
         }));
-        return null;
+        return err;
       }
     });
     fetching();
