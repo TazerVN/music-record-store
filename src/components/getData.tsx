@@ -1,18 +1,27 @@
 "use client";
 
 import { cache, useEffect, useState } from "react";
-import placeholder from "./placeholder.png"
+import placeholder from "./placeholder.png";
+import { StaticImageData } from "next/image";
 
 interface Song {
   name: string;
-  id: string;
-  thumb: string;
+  id: number;
+  thumb: string | StaticImageData;
+  price: number;
 }
 
 interface fetchResult {
   dataArray: Array<Song>;
   error?: Error | undefined | unknown;
   loading?: boolean;
+}
+
+interface SongResponse {
+  title: string;
+  id: number;
+  thumb: string;
+  cover_image: string;
 }
 
 const useMusicBrainData: () => fetchResult = () => {
@@ -23,39 +32,33 @@ const useMusicBrainData: () => fetchResult = () => {
   useEffect(() => {
     const fetching = cache(async () => {
       try {
-        const data = await fetch(
-          'https://api.discogs.com/database/search?q=genre=metal&type=release&per_page=30&page=2',
-          {
-            method: "GET",
-            headers: {
-              Authorization:
-                "Discogs key=uzdybcOnnZDVwKlKfWEC,secret=FpSCIyoGlVglOCffnaLEYBqtGznWwgMP",
-            },
-          }
+        const result = await fetch(
+          "/api/discogs?query=genre=metal&type=release&per_page=30&page=2"
         );
-        const result = await data.json();
-        console.log(result);
+        const json = await result.json();
         const songArray: Array<Song> = [];
+        console.log(json);
 
-        await result.results.forEach((work, wID) => {
-          const songObject = {
+        await json.results.forEach((work: SongResponse, wID: number) => {
+          const songObject: Song = {
             name: work.title,
             id: work.id,
-            thumb: work.cover_image ? work.cover_image : (work.thumb ? work.thumb : placeholder),
+            thumb: work.cover_image
+              ? work.cover_image
+              : work.thumb
+              ? work.thumb
+              : placeholder,
+            price: 50,
           };
           songArray[wID] = songObject;
         });
-        setFetchResult({
-          ...fetchResult,
-          dataArray: songArray,
-          loading: false,
-        });
+        setFetchResult((f) => ({ ...f, dataArray: songArray, loading: false }));
       } catch (err) {
         console.log(err);
-        setFetchResult({
-          ...fetchResult,
+        setFetchResult((f) => ({
+          ...f,
           error: err,
-        });
+        }));
         return null;
       }
     });
@@ -80,5 +83,5 @@ const useMusicBrainData: () => fetchResult = () => {
 //   return fetchImg();
 // }
 
-export { useMusicBrainData, CoverArtArchive };
+export { useMusicBrainData };
 export type { Song, fetchResult };

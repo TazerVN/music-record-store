@@ -1,19 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, AR_One_Sans } from "next/font/google";
+import { Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./theme-provider";
-import HeaderComponent from "@/components/header";
 import FooterComponent from "@/components/footer";
+import HeaderComponent from "@/components/header";
+import { CartProvider } from "@/components/cartprovider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-});
-
-const AROneSans = AR_One_Sans({
-  variable: "--font-one-sans",
-  subsets: ["latin"],
-  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -32,22 +27,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${AROneSans.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main className="flex flex-col justify-between">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <HeaderComponent></HeaderComponent>
-          <main>{children}</main>
-          <FooterComponent></FooterComponent>
+          <CartProvider>
+            <HeaderComponent></HeaderComponent>
+            <main className="flex flex-col items-center justify-between">{children}</main>
+            <FooterComponent></FooterComponent>
+          </CartProvider>
         </ThemeProvider>
-        </main>
       </body>
     </html>
   );

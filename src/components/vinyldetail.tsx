@@ -3,17 +3,36 @@ import Image, { StaticImageData } from "next/image";
 import { Button } from "./ui/button";
 import { useMusicBrainData } from "./getData";
 import { Song } from "./getData";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { cache } from "react";
+import { LoaderCircle } from "lucide-react";
+import Modal from "./addinpage";
+import { useScreenSize } from "@/components/useScreenSize";
 
 import type { fetchResult } from "./getData";
+import { ShoppingItem } from "./cartData";
 
 const cacheMusicBrain: () => fetchResult = cache(useMusicBrainData);
 
-function VinylDetail({ name, id, thumb }: Song) {
+function VinylDetail({
+  name,
+  id,
+  thumb,
+  price,
+  itemCart,
+  setItemCart,
+}: {
+  name: string;
+  id: number;
+  thumb: string | StaticImageData;
+  price: number;
+  itemCart: ShoppingItem[];
+  setItemCart: Dispatch<SetStateAction<ShoppingItem[]>>;
+}) {
   const [imgUrl, setImgURl] = useState<string | StaticImageData>("");
   const [loading, setLoading] = useState(true);
   const [isHover, setIsHover] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -28,27 +47,28 @@ function VinylDetail({ name, id, thumb }: Song) {
       }
     };
     fetch();
-  }, []);
+  }, [thumb]);
   return (
-    <div className="flex flex-col justify-between items-center min-h-50 min-w-50 hover:scale-105 transition-all">
+    <div
+      className={
+        "flex flex-col justify-between items-center min-h-50 min-w-50 transition-all " +
+        (isHover ? "scale-105" : "")
+      }
+    >
       <div className="rounded-2xl border-4 border-solid border-destructive p-1 justify-center items-center flex shadow-[0px_2px_5px] shadow-black">
         {!loading ? (
           <div
             onMouseEnter={() => {
               setIsHover(true);
             }}
-            onClick={() => {
-              if (isHover == true) {
-                setIsHover(false);
-              } else {
-                setIsHover(true);
-              }
-            }}
             onMouseLeave={() => {
               setIsHover(false);
             }}
+            onClick={() => {
+              setOpen(true);
+            }}
           >
-            <div className="relative h-40 w-40 flex">
+            <div className="relative h-40 w-40 xl:h-45 xl:w-45 flex">
               <Image
                 src={imgUrl}
                 alt={"cover art for " + name}
@@ -60,21 +80,37 @@ function VinylDetail({ name, id, thumb }: Song) {
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOsa2yqBwAFCAICLICSyQAAAABJRU5ErkJggg=="
                 fill
               ></Image>
+              <Modal
+                open={open}
+                setOpen={setOpen}
+                name={name}
+                img={imgUrl}
+                price={price}
+                itemCart={itemCart}
+                setItemCart={setItemCart}
+                id={id}
+              ></Modal>
               {isHover ? (
-                <div className="relative p-2 bg-transmission transition-all flex flex-col justify-center items-center w-40">
-                  <h4 className="text-sms overflow-scroll m-auto h-15 select-none">
+                <div className="relative p-2 bg-transmission transition-all flex flex-col justify-center items-center w-45">
+                  <h4 className="text-sms overflow-scroll overflow-x-hidden scroll-x m-auto h-15 select-none text-sm">
                     {name}
                   </h4>
-                  <h4 className="text-sms overflow-scroll m-auto h-fit select-none">
-                    $50
+                  <h4 className="text-sms m-auto h-fit select-none">
+                    {"$" + price}
                   </h4>
-                  <Button
-                    variant="destructive"
-                    size="icon"
-                    className="h-fit w-30 p-2 hover:bg-accent hover:text-accent-foreground transition-all"
-                  >
-                    Add to Cart
-                  </Button>
+                  <div className="h-10">
+                    <Button
+                      onClick={() => {
+                        setOpen(true);
+                        setIsHover(false);
+                      }}
+                      variant="destructive"
+                      size="icon"
+                      className="h-fit w-30 p-2 hover:border-b-2 border-destructive-foreground hover:text-accent-foreground transition-all"
+                    >
+                      Add to Cart
+                    </Button>
+                  </div>
                 </div>
               ) : (
                 <></>
@@ -92,24 +128,54 @@ function VinylDetail({ name, id, thumb }: Song) {
   );
 }
 
-function RenderVinylList(length: number) {
+function RenderVinylList(
+  length: number,
+  {
+    itemCart,
+    setItemCart,
+  }: {
+    itemCart: ShoppingItem[];
+    setItemCart: Dispatch<SetStateAction<ShoppingItem[]>>;
+  }
+) {
+  const screenSize = useScreenSize();
   const [dataFromResult, setDataFromResult] = useState<Song[]>([]);
   const result = cacheMusicBrain();
   useEffect(() => {
     const dummy = result.dataArray.splice(result.dataArray.length - length);
-    console.log(dummy);
     setDataFromResult(dummy);
-  }, [result.loading]);
+  }, [result.loading, length, result.dataArray]);
 
   if (result.loading)
-    return <p className="flex justify-center items-center">loading...</p>;
+    return (
+      <div className="flex justify-center items-center p-5">
+        <LoaderCircle className="animate-spin mr-2"></LoaderCircle>
+        <p>loading...</p>
+      </div>
+    );
+
+    if(result.error) return(
+      <p>An Error has occured</p>
+    )
 
   return (
     <>
-      <ul className="grid p-5 lg:grid-cols-4 lg:grid-rows-2 sm:grid-cols-1 sm:grid-rows-8 xl:grid-cols-6 xl:grid-rows-2 min-w-[0] min-h-[0] 2xl:grid-cols-8 2xl:grid-rows-1">
+      <ul
+        className={
+          "grid p-5 gap-5 md:grid-cols-4 grid-rows-2 lg:grid-cols-6 lg:grid-rows-2 min-w-[0] min-h-[0]" +
+          (screenSize == "xs" ? "grid-cols-1" : "grid-cols-3")
+        }
+      >
         {dataFromResult.map((x, id) => (
-          <li key={x.id} className="rounded-2xl transition-all">
-            <VinylDetail name={x.name} id={x.id} thumb={x.thumb}></VinylDetail>
+          <li key={id} className="rounded-2xl transition-all">
+            <VinylDetail
+              name={x.name}
+              id={id}
+              thumb={x.thumb}
+              price={x.price}
+              itemCart={itemCart}
+              setItemCart={setItemCart}
+            ></VinylDetail>
           </li>
         ))}
       </ul>

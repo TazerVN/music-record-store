@@ -11,6 +11,20 @@ const nextConfig: NextConfig = {
         pathname: "/release",
         search: "",
       },
+      {
+        protocol: "https",
+        hostname: "coverartarchive.org",
+        port: "",
+        pathname: "/release",
+        search: "",
+      },
+      {
+        protocol: "https",
+        hostname: "coverartarchive.org",
+        port: "",
+        pathname: "/release",
+        search: "",
+      },
     ],
   },
 };

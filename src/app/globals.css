@@ -145,5 +145,5 @@
 }
 
 * {
-  font-family: var(--font-one-sans) var(--font-geist-mono);
+  font-family: var(--font-one-sans) var(--font-geist-mono) "sans-serif";
 }
