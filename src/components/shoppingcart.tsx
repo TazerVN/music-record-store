@@ -17,7 +17,7 @@ export function Cart({
   isToggle: boolean;
   setToggleOff: CallableFunction;
   itemCart: ShoppingItem[];
-  setItemInCart: Dispatch<SetStateAction<ShoppingItem[]>> | null;
+  setItemInCart: Dispatch<SetStateAction<ShoppingItem[]>> | undefined;
 }) {
   const [transition, setTransition] = useState("right-[-1000px]");
   const screenSize = useScreenSize();
@@ -133,7 +133,7 @@ export function Cart({
                         <Trash2
                           className="hover:border-b-2 border-destructive transition-all h-10"
                           onClick={() => {
-                            if (setItemInCart !== null) {
+                            if (setItemInCart !== undefined) {
                               const newCart = [...itemCart].toSpliced(index, 1);
                               setItemInCart(newCart);
                             }
