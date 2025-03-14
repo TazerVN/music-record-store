@@ -1,6 +1,6 @@
 "use client";
 
-import { cache, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import placeholder from "./placeholder.png";
 import { StaticImageData } from "next/image";
 
