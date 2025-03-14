@@ -30,7 +30,7 @@ const useMusicBrainData: () => fetchResult = () => {
     loading: true,
   });
   useEffect(() => {
-    const fetching = cache(async () => {
+    const fetching = async () => {
       try {
         console.log("Starting fetch...");
         const result = await fetch(
@@ -66,7 +66,7 @@ const useMusicBrainData: () => fetchResult = () => {
         }));
         return err;
       }
-    });
+    };
     fetching();
   }, []);
 
